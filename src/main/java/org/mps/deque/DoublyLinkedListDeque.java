@@ -7,7 +7,9 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     private int size;
 
     public DoublyLinkedListDeque() {
-        // TODO
+        this.first = null;
+        this.last = null;
+        this.size = 0;
     }
 
     @Override
@@ -17,7 +19,17 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void append(T value) {
-        // TODO
+        DequeNode<T> aux = new DequeNode<T>(value,null,null);
+       if(this.first == null){
+          this.first = aux;
+          this.last = aux;
+          this.size ++;
+       }else{
+           this.last.setNext(aux);
+           this.size ++;
+           aux.setPrevious(this.last);
+           this.last = aux;
+       }
     }
 
     @Override
@@ -27,7 +39,14 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void deleteLast() {
-        // TODO
+        if(this.last == null){
+            throw new DoubleEndedQueueException("Error deleteLast: No se puede eliminar de una cola vacía");
+        }else{
+            DequeNode<T> aux = this.last.getPrevious();
+            aux.setNext(null);
+            this.last = aux;
+            this.size--;
+        }
     }
 
     @Override
@@ -44,7 +63,6 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public int size() {
-        // TODO
-        return 0;
+        return this.size;
     }
 }
