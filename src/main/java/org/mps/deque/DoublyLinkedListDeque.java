@@ -68,12 +68,20 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public T first() {
-        return this.first.getItem();
+        if(this.first == null){
+            throw new DoubleEndedQueueException("Error en first: first es nulo");
+        }else{
+            return this.first.getItem();
+        }
     }
 
     @Override
     public T last() {
-        return this.last.getItem();
+        if(this.last == null){
+            throw new DoubleEndedQueueException("Error en last: last es nulo");
+        }else{
+            return this.last.getItem();
+        }
     }
 
     @Override
