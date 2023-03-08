@@ -41,6 +41,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("DequeNode class has an item a reference to the next and a reference to the previous Node")
 public class DequeNodeTest {
 
+    //hazme un test sobre el metodo setNext con varios casoss
+
     @Test
     void isFirstFirstNode(){
         DequeNode<Object> node = new DequeNode<Object>(13,null,new DequeNode<Object>(12,null,null));
