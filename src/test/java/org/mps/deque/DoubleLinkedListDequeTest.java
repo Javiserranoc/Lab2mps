@@ -75,7 +75,7 @@ public class DoubleLinkedListDequeTest {
 
     @Test
     void deleteFirstEmptyList(){
-        assertThrows(DoubleEndedQueueException.class,() -> list.deleteLast());
+        assertThrows(DoubleEndedQueueException.class,() -> list.deleteFirst());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class DoubleLinkedListDequeTest {
 
     @Test
     void lastWorks(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+        DequeNode<Object> node = new DequeNode<Object>(1,null,null);
         list.append(node);
         assertEquals(node,list.last());
     }
@@ -127,19 +127,11 @@ public class DoubleLinkedListDequeTest {
     }
 
     @Test
-    void sizeColaConDosElemenos(){
+    void sizeColaConDosElementos(){
         list.prepend(new DequeNode<Object>(1,null,null));
         list.append(new DequeNode<Object>(3,null,null));
         assertEquals(2,list.size());
     }
 
-   /* @Test
-    void firstReturnTheFirstIfThereAreMultiplesNodes(){
-        DequeNode<Object> node1 =new DequeNode<Object>(1,null,null);
-        DequeNode<Object> node2 = new DequeNode(12,null,null);
-        list.prepend(node1);
-        list.prepend(node2);
-        //assertEquals(node1,list.first());
-    }*/
 
 }
