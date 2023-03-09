@@ -25,121 +25,137 @@ package org.mps.deque;
 
  */
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("A DoubleLinkedListDeque")
 public class DoubleLinkedListDequeTest {
     DoublyLinkedListDeque<Object> list;
-    @BeforeEach
-    void setUp(){
-        list = new DoublyLinkedListDeque<>();
+
+    @Nested
+    @DisplayName("Empty list")
+    class EmptyList{
+        @BeforeEach
+        void setUp(){
+            list = new DoublyLinkedListDeque<>();
+        }
+        @Test
+        @DisplayName("returns 0 when the list is empty")
+        void constructorStartEmptySize(){
+            assertEquals(0,list.size());
+        }
+
+        @Test
+        @DisplayName("puts the node in the first place of an empty list")
+        void prependEmptyList(){
+            DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+            list.prepend(node);
+            assertEquals(node,list.first());
+        }
+
+        @Test
+        @DisplayName("puts the node in the last place of an empty list")
+        void appendEmptyList(){
+            DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+            list.append(node);
+            assertEquals(node,list.last());
+        }
+
+        @Test
+        @DisplayName("throws DoubleEndedQueueException when there is no first node to delete")
+        void deleteFirstEmptyList(){
+            assertThrows(DoubleEndedQueueException.class,() -> list.deleteLast());
+        }
+
+        @Test
+        @DisplayName("throws DoubleEndedQueueException when there is no last node to delete")
+        void deleteLastEmptyList(){
+            assertThrows(DoubleEndedQueueException.class,() -> list.deleteLast());
+        }
+
+        @Test
+        @DisplayName("throws DoubleEndedQueueException when there is no last node")
+        void lastEmptyList(){
+            assertThrows(DoubleEndedQueueException.class, () -> list.last());
+        }
+
+        @Test
+        @DisplayName("throws DoubleEndedQueueException when there is no first node")
+        void firstEmptyList(){
+            assertThrows(DoubleEndedQueueException.class, () -> list.first());
+        }
     }
 
-    @Test
-    void constructorStartEmptySize(){
-        assertEquals(0,list.size());
-    }
+   @Nested
+    @DisplayName("The list have one or more nodes")
+    class SomethingInTheList{
+       @BeforeEach
+       void setUp(){
+           list = new DoublyLinkedListDeque<>();
+       }
 
-    @Test
-    void prependEmptyList(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.prepend(node);
-        assertEquals(node,list.first());
-    }
+       @Test
+       @DisplayName("puts the node in the first place")
+       void prependWorks(){
+           DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+           list.prepend(new DequeNode<Object>(2,null,null));
+           list.prepend(node);
+           assertEquals(node,list.first());
+       }
 
-    @Test
-    void prependWorks(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.prepend(new DequeNode<Object>(2,null,null));
-        list.prepend(node);
-        assertEquals(node,list.first());
-    }
+       @Test
+       @DisplayName("puts the node in the last place")
+       void appendWorks(){
+           DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+           list.append(new DequeNode<Object>(2,null,null));
+           list.append(node);
+           assertEquals(node,list.last());
+       }
 
-    @Test
-    void appendEmptyList(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.append(node);
-        assertEquals(node,list.last());
-    }
+       @Test
+       @DisplayName("deletes the first node")
+       void deleteFirstWorks(){
+           DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+           list.append(new DequeNode<Object>(2,null,null));
+           list.append(node);
+           list.deleteFirst();
+           assertEquals(node,list.first());
+       }
 
-    @Test
-    void appendWorks(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.append(new DequeNode<Object>(2,null,null));
-        list.append(node);
-        assertEquals(node,list.last());
-    }
+       @Test
+       @DisplayName("deletes the last node")
+       void deleteLastWorks(){
+           DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+           list.append(node);
+           list.append(new DequeNode<Object>(2,null,null));
+           list.deleteLast();
+           assertEquals(node,list.last());
+       }
 
-    @Test
-    void deleteFirstEmptyList(){
-        assertThrows(DoubleEndedQueueException.class,() -> list.deleteLast());
-    }
+       @Test
+       @DisplayName("returns the last node of the list")
+       void lastWorks(){
+           DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+           list.append(node);
+           assertEquals(node,list.last());
+       }
 
-    @Test
-    void deleteFirstWorks(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.append(new DequeNode<Object>(2,null,null));
-        list.append(node);
-        list.deleteFirst();
-        assertEquals(node,list.first());
-    }
+       @Test
+       @DisplayName("returns the first node of the list")
+       void firstWorks(){
+           DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+           list.append(node);
+           assertEquals(node,list.first());
+       }
 
-
-    @Test
-    void deleteLastEmptyList(){
-        assertThrows(DoubleEndedQueueException.class,() -> list.deleteLast());
-    }
-
-    @Test
-    void deleteLastWorks(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.append(node);
-        list.append(new DequeNode<Object>(2,null,null));
-        list.deleteLast();
-        assertEquals(node,list.last());
-    }
-
-    @Test
-    void lastEmptyList(){
-        assertThrows(DoubleEndedQueueException.class, () -> list.last());
-    }
-
-    @Test
-    void lastWorks(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.append(node);
-        assertEquals(node,list.last());
-    }
-
-    @Test
-    void firstEmptyList(){
-        assertThrows(DoubleEndedQueueException.class, () -> list.first());
-    }
-
-    @Test
-    void firstWorks(){
-        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
-        list.append(node);
-        assertEquals(node,list.first());
-    }
-
-    @Test
-    void sizeColaConDosElemenos(){
-        list.prepend(new DequeNode<Object>(1,null,null));
-        list.append(new DequeNode<Object>(3,null,null));
-        assertEquals(2,list.size());
-    }
-
-   /* @Test
-    void firstReturnTheFirstIfThereAreMultiplesNodes(){
-        DequeNode<Object> node1 =new DequeNode<Object>(1,null,null);
-        DequeNode<Object> node2 = new DequeNode(12,null,null);
-        list.prepend(node1);
-        list.prepend(node2);
-        //assertEquals(node1,list.first());
-    }*/
+       @Test
+       @DisplayName("returns the list's size")
+       void sizeColaConDosElemenos(){
+           list.prepend(new DequeNode<Object>(1,null,null));
+           list.append(new DequeNode<Object>(3,null,null));
+           assertEquals(2,list.size());
+       }
+   }
 
 }
