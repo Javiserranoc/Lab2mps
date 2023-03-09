@@ -44,6 +44,21 @@ public class DoubleLinkedListDequeTest {
     }
 
     @Test
+    void prependEmptyList(){
+        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+        list.prepend(node);
+        assertEquals(node,list.first());
+    }
+
+    @Test
+    void prependWorks(){
+        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+        list.prepend(new DequeNode<Object>(2,null,null));
+        list.prepend(node);
+        assertEquals(node,list.first());
+    }
+
+    @Test
     void appendEmptyList(){
         DequeNode<Object> node =new DequeNode<Object>(1,null,null);
         list.append(node);
@@ -57,6 +72,21 @@ public class DoubleLinkedListDequeTest {
         list.append(node);
         assertEquals(node,list.last());
     }
+
+    @Test
+    void deleteFirstEmptyList(){
+        assertThrows(DoubleEndedQueueException.class,() -> list.deleteLast());
+    }
+
+    @Test
+    void deleteFirstWorks(){
+        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+        list.append(new DequeNode<Object>(2,null,null));
+        list.append(node);
+        list.deleteFirst();
+        assertEquals(node,list.first());
+    }
+
 
     @Test
     void deleteLastEmptyList(){
@@ -83,4 +113,33 @@ public class DoubleLinkedListDequeTest {
         list.append(node);
         assertEquals(node,list.last());
     }
+
+    @Test
+    void firstEmptyList(){
+        assertThrows(DoubleEndedQueueException.class, () -> list.first());
+    }
+
+    @Test
+    void firstWorks(){
+        DequeNode<Object> node =new DequeNode<Object>(1,null,null);
+        list.append(node);
+        assertEquals(node,list.first());
+    }
+
+    @Test
+    void sizeColaConDosElemenos(){
+        list.prepend(new DequeNode<Object>(1,null,null));
+        list.append(new DequeNode<Object>(3,null,null));
+        assertEquals(2,list.size());
+    }
+
+   /* @Test
+    void firstReturnTheFirstIfThereAreMultiplesNodes(){
+        DequeNode<Object> node1 =new DequeNode<Object>(1,null,null);
+        DequeNode<Object> node2 = new DequeNode(12,null,null);
+        list.prepend(node1);
+        list.prepend(node2);
+        //assertEquals(node1,list.first());
+    }*/
+
 }

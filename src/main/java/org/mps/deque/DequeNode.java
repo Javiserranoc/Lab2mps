@@ -53,4 +53,5 @@ class DequeNode<T> {
     boolean isNotATerminalNode() {
         return !(isFirstNode() || isLastNode());
     }
+
 }
