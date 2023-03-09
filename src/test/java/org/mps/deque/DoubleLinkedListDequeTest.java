@@ -64,7 +64,7 @@ public class DoubleLinkedListDequeTest {
         @Test
         @DisplayName("throws DoubleEndedQueueException when there is no first node to delete")
         void deleteFirstEmptyList(){
-            assertThrows(DoubleEndedQueueException.class,() -> list.deleteLast());
+            assertThrows(DoubleEndedQueueException.class,() -> list.deleteFirst());
         }
 
         @Test
