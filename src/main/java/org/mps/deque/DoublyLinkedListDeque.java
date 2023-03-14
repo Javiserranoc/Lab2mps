@@ -90,10 +90,21 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public int size() {
         return this.size;
     }
+
     @Override
     public T get (int index){
-        return null;
+        if (index < 0 || index >= this.size){
+            throw new DoubleEndedQueueException("El indice introducido ha de ser correcto");
+        }else{
+            DequeNode<T> aux = this.first;
+            for (int cont = 0; cont < index; cont++){
+                aux = aux.getNext();
+            }
+            return aux.getItem();
+        }
     }
+   
+    
 
     @Override
     public boolean contains(T value) {
@@ -102,11 +113,23 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void remove(T value) {
-
+        boolean found = false;
+        DequeNode<T> aux = this.first;
+        while(!found && aux != null){
+            if(aux.getItem().equals(value)){
+                found = true;
+                aux.getPrevious().setNext(aux.getNext());
+                aux.getNext().setPrevious(aux.getPrevious());
+                this.size--;
+            }else{
+                aux = aux.getNext();
+            }
+        }
     }
 
     @Override
     public void sort(Comparator<? super T> comparator) {
+
 
     }
 
