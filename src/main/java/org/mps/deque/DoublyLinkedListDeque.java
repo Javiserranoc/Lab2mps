@@ -97,7 +97,19 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public boolean contains(T value) {
-        return false;
+        boolean found = false;
+        if(this.first.getItem() == value){
+            found = true;
+        }else{
+            DequeNode<T> aux = this.first;
+            while(aux.getItem() != value){
+                aux = aux.getNext();
+            }
+            if(aux.getItem() == value){
+                found = true;
+            }
+        }
+        return found;
     }
 
     @Override
@@ -107,7 +119,22 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void sort(Comparator<? super T> comparator) {
-
+        if(this.size > 1){
+            DequeNode<T> aux = this.first;
+            DequeNode<T> aux2 = this.first.getNext();
+            while(aux2 != null){
+                if(comparator.compare(aux.getItem(),aux2.getItem()) > 0){
+                    T aux3 = aux.getItem();
+                    aux.setItem(aux2.getItem());
+                    aux2.setItem(aux3);
+                    aux = this.first;
+                    aux2 = this.first.getNext();
+                }else{
+                    aux = aux.getNext();
+                    aux2 = aux2.getNext();
+                }
+            }
+        }
     }
 
 
