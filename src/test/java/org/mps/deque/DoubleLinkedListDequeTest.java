@@ -22,9 +22,24 @@ package org.mps.deque;
         +devuelve el ultimo objeto de la lista si tiene elementos
     -size
         +devuelve la longitud de la lista
+    -get
+
+    -contains
+        +No lo encuentra(devuelve false)
+            +lista vacia
+            +lista con objetos
+        +Lo encuentra(devuelve true)
+    -remove
+    -sort
+        +lista ordenada(devuelve la misma lista)
+        +lista desorderdenada(devuelve la lista ordenada)
+        +lista vacia(devuelve la misma lista)
+        +lista con un objeto(devuelve la misma lista)
  */
 
 import org.junit.jupiter.api.*;
+
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,6 +98,12 @@ public class DoubleLinkedListDequeTest {
         @DisplayName("throws DoubleEndedQueueException when there is no first node")
         void firstEmptyList(){
             assertThrows(DoubleEndedQueueException.class, () -> list.first());
+        }
+
+        @Test
+        @DisplayName("returns false because it contains nothing")
+        void containsEmptyList(){
+            assertEquals(false,list.contains(1));
         }
     }
 
@@ -155,6 +176,61 @@ public class DoubleLinkedListDequeTest {
             list.append(new DequeNode<Object>(3,null,null));
             assertEquals(2,list.size());
         }
-    }
+        @Test
+        @DisplayName("returns false because the value is not in the list")
+        void containsNotFound(){
+            list.prepend(1);
+            list.append(3);
+            assertEquals(false,list.contains(2));
+        }
+        @Test
+        @DisplayName("returns true, it founds the value in the list")
+        void containsFound(){
+            list.prepend("a");
+            assertEquals(true,list.contains("a"));
+        }
 
+        @Test
+        void sortEmptyList(){
+            DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
+            deque.sort(Comparator.naturalOrder());
+            assertEquals(0, deque.size());
+        }
+
+        @Test
+        void sortOneElement(){
+            DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
+            deque.append(1);
+            deque.sort(Comparator.naturalOrder());
+            assertEquals(1,deque.first());
+        }
+
+        @Test
+        void sortDisorderedList(){
+            DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
+            deque.append(3);
+            deque.append(4);
+            deque.append(1);
+            deque.append(2);
+            deque.sort(Comparator.naturalOrder());
+            assertEquals(1,deque.first());
+            assertEquals(2,deque.get(1));
+            assertEquals(3,deque.get(2));
+            assertEquals(4,deque.last());
+        }
+
+        @Test
+        void sortOrderedList(){
+            DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
+            deque.append(4);
+            deque.append(3);
+            deque.append(2);
+            deque.append(1);
+            deque.sort(Comparator.naturalOrder());
+            assertEquals(1,deque.first());
+            assertEquals(2,deque.get(1));
+            assertEquals(3,deque.get(2));
+            assertEquals(4,deque.last());
+        }
+    }
 }
