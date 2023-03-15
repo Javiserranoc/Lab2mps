@@ -191,6 +191,7 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
+        @DisplayName("the size of the list still 0")
         void sortEmptyList(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
             deque.sort(Comparator.naturalOrder());
@@ -198,6 +199,7 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
+        @DisplayName("with one element, the list still the same")
         void sortOneElement(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
             deque.append(1);
@@ -206,6 +208,7 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
+        @DisplayName("with disordered list it returns the list in order")
         void sortDisorderedList(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
             deque.append(3);
@@ -220,6 +223,7 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
+        @DisplayName("with the ordered list returns the same list")
         void sortOrderedList(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
             deque.append(4);
