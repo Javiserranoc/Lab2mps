@@ -29,6 +29,8 @@ package org.mps.deque;
             +lista vacia
             +lista con objetos
         +Lo encuentra(devuelve true)
+            +primero en la lista
+            +en alguna otra posición
     -remove
     -sort
         +lista ordenada(devuelve la misma lista)
@@ -104,6 +106,20 @@ public class DoubleLinkedListDequeTest {
         @DisplayName("returns false because it contains nothing")
         void containsEmptyList(){
             assertEquals(false,list.contains(1));
+        }
+
+        @Test
+        void removeEmptyList(){
+            list.remove(1);
+            assertEquals(0, list.size());
+        }
+
+        @Test
+        @DisplayName("the size of the list still 0")
+        void sortEmptyList(){
+            DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
+            deque.sort(Comparator.naturalOrder());
+            assertEquals(0, deque.size());
         }
     }
 
@@ -204,41 +220,29 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
-        void removeVoidList(){
-            DoublyLinkedListDeque nodeList = new DoublyLinkedListDeque();
-            nodeList.remove(1);
-            assertEquals(0, list.size());
-        }
-
-        @Test
         void removeFromListAValueThatIsActuallyListed(){
-            DoublyLinkedListDeque nodeList = new DoublyLinkedListDeque();
-            nodeList.append(1);
-            nodeList.append(2);
-            nodeList.append(3);
-            nodeList.append(2);
-            nodeList.remove(2);
-            assertEquals(1,nodeList.get(0));
-            assertEquals(3,nodeList.get(1));
-            assertEquals(2,nodeList.get(2));
-            assertEquals(3, nodeList.size());
+            list.append(1);
+            list.append(2);
+            list.append(3);
+            list.append(2);
+            list.remove(2);
+            assertEquals(1,list.get(0));
+            assertEquals(3,list.get(1));
+            assertEquals(2,list.get(2));
+            assertEquals(3, list.size());
         }
 
         @Test
         void removeFromListAValueThatIsNotContainedIn(){
-            DoublyLinkedListDeque nodeList = new DoublyLinkedListDeque();
-            nodeList.append(1);
-            nodeList.append(2);
-            nodeList.append(3);
-            nodeList.remove(4);
-            assertEquals(1,nodeList.get(0));
-            assertEquals(2, nodeList.get(1));
-            assertEquals(3,nodeList.get(2));
-            assertEquals(3,nodeList.size());
+            list.append(1);
+            list.append(2);
+            list.append(3);
+            list.remove(4);
+            assertEquals(1,list.get(0));
+            assertEquals(2, list.get(1));
+            assertEquals(3,list.get(2));
+            assertEquals(3,list.size());
         }
-
-
-    }
 
         @Test
         @DisplayName("returns false because the value is not in the list")
@@ -247,19 +251,22 @@ public class DoubleLinkedListDequeTest {
             list.append(3);
             assertEquals(false,list.contains(2));
         }
+
         @Test
-        @DisplayName("returns true, it founds the value in the list")
-        void containsFound(){
+        @DisplayName("returns true, it founds the value in the first node")
+        void containsFoundFirst(){
             list.prepend("a");
             assertEquals(true,list.contains("a"));
         }
 
         @Test
-        @DisplayName("the size of the list still 0")
-        void sortEmptyList(){
-            DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
-            deque.sort(Comparator.naturalOrder());
-            assertEquals(0, deque.size());
+        @DisplayName("returns true, it founds the value in the list")
+        void containsFound(){
+            list.prepend("a");
+            list.prepend("v");
+            list.prepend("f");
+            list.prepend("y");
+            assertEquals(true,list.contains("f"));
         }
 
         @Test
@@ -301,3 +308,4 @@ public class DoubleLinkedListDequeTest {
             assertEquals(4,deque.last());
         }
     }
+}

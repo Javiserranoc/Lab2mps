@@ -17,15 +17,15 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public void prepend(T value) {
         DequeNode aux = new DequeNode(value,null,null);
-        if (this.first == null){
-            this.first = aux;
-            this.last = aux;
-            this.size += 1;
+        if (first == null){
+            first = aux;
+            last = aux;
+            size += 1;
         }else{
-            this.first.setPrevious(aux);
-            aux.setNext(this.first);
-            this.first = aux;
-            this.size += 1;
+            first.setPrevious(aux);
+            aux.setNext(first);
+            first = aux;
+            size += 1;
         }
     }
 
