@@ -176,6 +176,70 @@ public class DoubleLinkedListDequeTest {
             list.append(new DequeNode<Object>(3,null,null));
             assertEquals(2,list.size());
         }
+
+        @Test
+        void getWithNegativeIndex(){
+            list.append(1);
+            assertThrows(DoubleEndedQueueException.class, () -> list.get(-1));
+        }
+
+        @Test
+        void getWithIndexGreaterThanListSize(){
+            list.append(1);
+            assertThrows(DoubleEndedQueueException.class, () -> list.get(1));
+        }
+
+        @Test
+        void getWithIndexInBounds(){
+            list.append(4);
+            assertEquals(4 , list.get(0));
+        }
+
+        @Test
+        void getWithIndexUpperLimit(){
+            list.append(1);
+            list.append(2);
+            list.append(3);
+            assertEquals(2 , list.get(1));
+        }
+
+        @Test
+        void removeVoidList(){
+            DoublyLinkedListDeque nodeList = new DoublyLinkedListDeque();
+            nodeList.remove(1);
+            assertEquals(0, list.size());
+        }
+
+        @Test
+        void removeFromListAValueThatIsActuallyListed(){
+            DoublyLinkedListDeque nodeList = new DoublyLinkedListDeque();
+            nodeList.append(1);
+            nodeList.append(2);
+            nodeList.append(3);
+            nodeList.append(2);
+            nodeList.remove(2);
+            assertEquals(1,nodeList.get(0));
+            assertEquals(3,nodeList.get(1));
+            assertEquals(2,nodeList.get(2));
+            assertEquals(3, nodeList.size());
+        }
+
+        @Test
+        void removeFromListAValueThatIsNotContainedIn(){
+            DoublyLinkedListDeque nodeList = new DoublyLinkedListDeque();
+            nodeList.append(1);
+            nodeList.append(2);
+            nodeList.append(3);
+            nodeList.remove(4);
+            assertEquals(1,nodeList.get(0));
+            assertEquals(2, nodeList.get(1));
+            assertEquals(3,nodeList.get(2));
+            assertEquals(3,nodeList.size());
+        }
+
+
+    }
+
         @Test
         @DisplayName("returns false because the value is not in the list")
         void containsNotFound(){
@@ -237,4 +301,3 @@ public class DoubleLinkedListDequeTest {
             assertEquals(4,deque.last());
         }
     }
-}
