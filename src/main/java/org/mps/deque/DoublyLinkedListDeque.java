@@ -113,9 +113,7 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
         boolean found = false;
         if(this.size == 0){
             throw new DoubleEndedQueueException("No se puede aplicar la funcion a una lista vacia");
-        }
-
-        if(this.size >= 1){
+        }else{
             if(this.first.getItem().equals(value)){
                 found = true;
             }else{
