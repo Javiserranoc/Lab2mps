@@ -93,7 +93,9 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public T get (int index){
-        if (index < 0 || index >= this.size){
+        if(this.size == 0){
+            throw new DoubleEndedQueueException("No se puede obtener nada de una lista vacia");
+        }else if (index < 0 || index >= this.size){
             throw new DoubleEndedQueueException("El indice introducido ha de ser correcto");
         }else{
             DequeNode<T> aux = this.first;
@@ -109,6 +111,10 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     @Override
     public boolean contains(T value) {
         boolean found = false;
+        if(this.size == 0){
+            throw new DoubleEndedQueueException("No se puede aplicar la funcion a una lista vacia");
+        }
+
         if(this.size >= 1){
             if(this.first.getItem().equals(value)){
                 found = true;
@@ -129,6 +135,9 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
     public void remove(T value) {
         boolean found = false;
         DequeNode<T> aux = this.first;
+        if(aux == null){
+            throw new DoubleEndedQueueException("No se puede borrar nada de una lista vacia");
+        }
         while(!found && aux != null){
             if(aux.getItem().equals(value)){
                 found = true;
@@ -143,6 +152,10 @@ public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 
     @Override
     public void sort(Comparator<? super T> comparator) {
+        if(this.size == 0){
+            throw new DoubleEndedQueueException("No se puede ordenar una lista vacia");
+        }
+
         if(this.size > 1){
             DequeNode<T> aux = this.first;
             DequeNode<T> aux2 = this.first.getNext();

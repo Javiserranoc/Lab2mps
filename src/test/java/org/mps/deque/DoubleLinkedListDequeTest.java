@@ -23,19 +23,25 @@ package org.mps.deque;
     -size
         +devuelve la longitud de la lista
     -get
-
+        +lanza excepcion cuando la lista esta vacia
+        +lanza excepcion cuando el indice indicado en get es menor que 0
+        +lanza excepcion cuando el indice indicado en get es >= que el tamaño de la lista
+        +devuelve el ultimo item cuando el indice indicado es tamaño de la lista menos 1
+        +devuelve el primer item cuando el indice indicado es 0
+        +devuelve el item que se encuentre en el indice indicado, teniendo en cuenta que este sea correcto
     -contains
-        +No lo encuentra(devuelve false)
-            +lista vacia
-            +lista con objetos
-        +Lo encuentra(devuelve true)
-            +primero en la lista
-            +en alguna otra posición
+        +lista con objetos pero no está el que se busca, entonces devuelve False
+        +lista vacia lanza excepciion
+        +lista con objetos y lo encuentra en la primera posicion, entonces devuelve True.
+        +lista con objetos y lo encuentra en cualquier otra posicion, entonces devuelve True.
     -remove
+        +lanza excepcion cuando la lista esta vacia
+        +elimina el primer nodo de la lista que contenga el item indicado y actualiza el tamaño de la lista
+        +si el item indicado no está en la lista, se queda igual
     -sort
         +lista ordenada(devuelve la misma lista)
-        +lista desorderdenada(devuelve la lista ordenada)
-        +lista vacia(devuelve la misma lista)
+        +lista desorderdenada(devuelve la lista ordenada ascendentemente)
+        +lista vacia(lanza excepcion)
         +lista con un objeto(devuelve la misma lista)
  */
 
@@ -103,23 +109,28 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
-        @DisplayName("returns false because it contains nothing")
+        @DisplayName("throws DoubleEndedQueueException when try to use get")
+        void getWithIndexFromEmptyList(){
+            assertThrows(DoubleEndedQueueException.class, () -> list.get(0));
+        }
+
+        @Test
+        @DisplayName("throws DoubleEndedQueueException when try to use contains")
         void containsEmptyList(){
-            assertEquals(false,list.contains(1));
+            assertThrows(DoubleEndedQueueException.class, () -> list.contains(1));
         }
 
         @Test
+        @DisplayName("throws DoubleEndedQueueException when try to remove")
         void removeEmptyList(){
-            list.remove(1);
-            assertEquals(0, list.size());
+            assertThrows(DoubleEndedQueueException.class, () -> list.remove(1));
         }
 
         @Test
-        @DisplayName("the size of the list still 0")
+        @DisplayName("throws DoubleEndedQueueException when try to sort")
         void sortEmptyList(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
-            deque.sort(Comparator.naturalOrder());
-            assertEquals(0, deque.size());
+            assertThrows(DoubleEndedQueueException.class, () ->   deque.sort(Comparator.naturalOrder()));
         }
     }
 
@@ -194,32 +205,41 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
+        @DisplayName("throw DoubleEndedQueueException when the index specified for get method is negative")
         void getWithNegativeIndex(){
             list.append(1);
             assertThrows(DoubleEndedQueueException.class, () -> list.get(-1));
         }
 
         @Test
+        @DisplayName("throw DoubleEndedQueueException when the index specified for get method is greater or equals than list's size")
         void getWithIndexGreaterThanListSize(){
             list.append(1);
             assertThrows(DoubleEndedQueueException.class, () -> list.get(1));
         }
 
         @Test
+        @DisplayName("returns the last item when index specified for get method is list's size minus one")
         void getWithIndexInBounds(){
             list.append(4);
-            assertEquals(4 , list.get(0));
+            Object expectedValue = 4;
+            Object actualValue = list.get(0);
+            assertEquals(expectedValue , actualValue);
         }
 
         @Test
-        void getWithIndexUpperLimit(){
+        @DisplayName("returns the item that is in the index position specified for get method")
+        void getWithIndexOfMiddleNode(){
             list.append(1);
             list.append(2);
             list.append(3);
-            assertEquals(2 , list.get(1));
+            Object expectedValue = 2;
+            Object actualValue = list.get(1);
+            assertEquals(expectedValue , actualValue);
         }
 
         @Test
+        @DisplayName("returns the list without the first node that had the item indicated in remove method")
         void removeFromListAValueThatIsActuallyListed(){
             list.append(1);
             list.append(2);
@@ -233,6 +253,7 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
+        @DisplayName("when try to remove a item that is not in the list, the list remains the same")
         void removeFromListAValueThatIsNotContainedIn(){
             list.append(1);
             list.append(2);
@@ -270,7 +291,7 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
-        @DisplayName("with one element, the list still the same")
+        @DisplayName("with one element, the list still the same (ordered)")
         void sortOneElement(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
             deque.append(1);
@@ -279,7 +300,7 @@ public class DoubleLinkedListDequeTest {
         }
 
         @Test
-        @DisplayName("with disordered list it returns the list in order")
+        @DisplayName("with disordered list it returns the list in ascending order")
         void sortDisorderedList(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
             deque.append(3);
@@ -297,10 +318,10 @@ public class DoubleLinkedListDequeTest {
         @DisplayName("with the ordered list returns the same list")
         void sortOrderedList(){
             DoublyLinkedListDeque<Integer> deque = new DoublyLinkedListDeque<>();
-            deque.append(4);
-            deque.append(3);
-            deque.append(2);
             deque.append(1);
+            deque.append(2);
+            deque.append(3);
+            deque.append(4);
             deque.sort(Comparator.naturalOrder());
             assertEquals(1,deque.first());
             assertEquals(2,deque.get(1));
