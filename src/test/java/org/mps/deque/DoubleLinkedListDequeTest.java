@@ -1,4 +1,7 @@
 package org.mps.deque;
+/**
+ * @author Juan José Torres y Javier Serrano
+ */
 /*
                             Casos
     -Al llamar al constructor inicia una lista vacia

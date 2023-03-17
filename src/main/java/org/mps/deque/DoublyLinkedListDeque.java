@@ -1,6 +1,9 @@
 package org.mps.deque;
 
 import java.util.Comparator;
+/**
+ * @author Juan José Torres y Javier Serrano
+ */
 
 public class DoublyLinkedListDeque<T> implements DoubleEndedQueue<T> {
 

@@ -4,6 +4,9 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+/**
+ * @author Juan José Torres y Javier Serrano
+ */
 /*
         Casos
         -getItem
